@@ -9,8 +9,8 @@ def get_avg_norm_happiness(child_gifts, wish, good):
 
     max_child_happiness = 2*100
     max_gift_happiness = 2*1000
-    total_norm_child_happiness = 0
-    total_norm_gift_happiness = 0
+    total_child_happiness = 0
+    total_gift_happiness = 0
 
     for child in range(0,len(wish)):
 
@@ -18,16 +18,16 @@ def get_avg_norm_happiness(child_gifts, wish, good):
 
         child_happiness = -1
         if gift in wish[child]:
-            child_happiness = 100-np.argwhere(wish[child] == gift)
-        total_norm_child_happiness += child_happiness / max_child_happiness
+            child_happiness = (100-np.argwhere(wish[child] == gift).flatten()+1)*2
+        total_child_happiness += child_happiness
 
         gift_happiness = -1
         if child in good[gift]:
-            gift_happiness = 1000-np.argwhere(good[gift] == child)
-        total_norm_gift_happiness += gift_happiness / max_gift_happiness
+            gift_happiness = (1000-np.argwhere(good[gift] == child).flatten()+1)*2
+        total_gift_happiness += gift_happiness
 
-    avg_norm_child_happiness = (1./n_child)*total_norm_child_happiness
-    avg_norm_gift_happiness  = (1./n_gift)*total_norm_gift_happiness
+    avg_norm_child_happiness = (1./n_child)*total_child_happiness / max_child_happiness
+    avg_norm_gift_happiness  = (1./n_gift)*total_gift_happiness / max_gift_happiness
     avg_norm_happiness = avg_norm_child_happiness**3 + avg_norm_gift_happiness**3
     return avg_norm_happiness
 
